@@ -1,0 +1,30 @@
+#Ant Dark
+
+colors:
+  primary:
+    background: '#292c35'
+    foreground: '#dcdfe4'
+
+  normal:
+    black: '#292c35'
+    red: '#ea616b'
+    green: '#c2e98d'
+    yellow: '#f6ea95'
+    blue: '#80cbc3'
+    magenta: '#c793eb'
+    cyan: '#aeddff'
+    white: '#dcdfe4'
+
+  bright:
+    black: '#292c35'
+    red: '#ea616b'
+    green: '#c2e98d'
+    yellow: '#f6ea95'
+    blue: '#80cbc3'
+    magenta: '#c793eb'
+    cyan: '#aeddff'
+    white: '#dcdfe4'
+    
+  selection:
+    text: CellBackground
+    background: '#f6ea95'
