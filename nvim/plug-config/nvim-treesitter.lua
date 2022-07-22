@@ -1,4 +1,3 @@
-lua << EOF
 require('nvim-treesitter.configs').setup {
   highlight = { enable = true },
 }
@@ -21,4 +20,3 @@ vim.api.nvim_create_autocmd('BufWinLeave', {
     end
   end
 })
-EOF
