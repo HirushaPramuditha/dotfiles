@@ -13,19 +13,41 @@ call plug#begin()
 	Plug 'navarasu/onedark.nvim'
 	Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 	Plug 'kyazdani42/nvim-tree.lua'
+	Plug 'romgrk/barbar.nvim'
+	Plug 'akinsho/toggleterm.nvim', {'tag' : 'v2.*'}
 call plug#end()
 
 lua << END
 require('lualine').setup()
+require("toggleterm").setup{}
 END
 
 colorscheme onedark
 
-lua <<EOF
+lua << EOF
 require('nvim-treesitter.configs').setup {
   highlight = { enable = true },
 }
 require'nvim-tree'.setup {}
+
+vim.api.nvim_create_autocmd('BufWinEnter', {
+  pattern = '*',
+  callback = function()
+    if vim.bo.filetype == 'NvimTree' then
+      require'bufferline.state'.set_offset(31, 'FileTree')
+    end
+  end
+})
+
+vim.api.nvim_create_autocmd('BufWinLeave', {
+  pattern = '*',
+  callback = function()
+    if vim.fn.expand('<afile>'):match('NvimTree') then
+      require'bufferline.state'.set_offset(0)
+    end
+  end
+})
+
 EOF
 
 " vimrc
@@ -41,7 +63,7 @@ let g:nvim_tree_create_in_closed_folder = 1 "0 by default, When creating files, 
 let g:nvim_tree_special_files = { 'README.md': 1, 'Makefile': 1, 'MAKEFILE': 1 } " List of filenames that gets highlighted with NvimTreeSpecialFile
 let g:nvim_tree_show_icons = {
     \ 'git': 1,
-	\ 'folders': 0,
+	\ 'folders': 1,
     \ 'files': 1,
     \ 'folder_arrows': 1,
     \ }
@@ -77,10 +99,10 @@ let g:nvim_tree_icons = {
     \   }
     \ }
 
-nnoremap <C-n> :NvimTreeToggle<CR>
-nnoremap <C-f> :NvimTreeFocus<CR>
-nnoremap <leader>r :NvimTreeRefresh<CR>
-nnoremap <leader>n :NvimTreeFindFile<CR>
+nnoremap <silent> <C-n> :NvimTreeToggle<CR>
+nnoremap <silent> <C-f> :NvimTreeFocus<CR>
+nnoremap <silent> <leader>r :NvimTreeRefresh<CR>
+nnoremap <silent> <leader>n :NvimTreeFindFile<CR>
 " More available functions:
 " NvimTreeOpen
 " NvimTreeClose
@@ -89,6 +111,8 @@ nnoremap <leader>n :NvimTreeFindFile<CR>
 " NvimTreeResize
 " NvimTreeCollapse
 " NvimTreeCollapseKeepBuffers
+
+nnoremap <silent> <C-t> :ToggleTerm<CR>
 
 set termguicolors " this variable must be enabled for colors to be applied properly
 
